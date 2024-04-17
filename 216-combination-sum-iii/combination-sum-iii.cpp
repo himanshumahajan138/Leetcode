@@ -3,10 +3,12 @@ public:
     void generate(int i, int k, int sum, int target, vector<int>& sub,
                   vector<vector<int>>& ans) {
         if(target<k)return;
+
         if (sub.size()==k){
             if(sum == target)ans.push_back(sub);
             return;
         }
+        
         if(i==10) return ;
         
         sub.push_back(i);
