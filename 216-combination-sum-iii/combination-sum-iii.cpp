@@ -15,7 +15,6 @@ public:
         sub.pop_back();
         sum -= i;
         generate(i + 1, k, target - i, sum, target, sub, ans);
-        return;
     }
 
     vector<vector<int>> combinationSum3(int k, int n) {
