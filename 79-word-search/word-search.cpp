@@ -1,3 +1,9 @@
+const static auto initialize = [] {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
 class Solution {
 public:
     bool find_next(int row, int col, int i, int m, int n,
