@@ -6,11 +6,9 @@ public:
             ans.push_back(st);
             return;
         }
-        char curr_digit = digits[i];
-        string curr_string = mpp[curr_digit];
+        string curr_string = mpp[digits[i]];
 
-        for (int j = 0; j < curr_string.length(); j++) {
-            char curr_char = curr_string[j];
+        for (auto curr_char : curr_string) {
             st.push_back(curr_char);
             generate(i + 1, st, digits, ans, mpp);
             st.pop_back();
