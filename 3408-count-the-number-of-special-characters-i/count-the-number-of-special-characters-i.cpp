@@ -1,24 +1,17 @@
 class Solution {
 public:
     int numberOfSpecialChars(string word) {
-        unordered_set<char> low;
-        unordered_set<char> up;
-        int c = 0;
-
-        for (char i : word) {
-            if (islower(i)) {
-                low.insert(i);
-            } else {
-                up.insert(i);
-            }
+        vector<int>lfreq(26,0),ufreq(26,0);
+        int count=0;
+        for(char ch:word)
+        {
+            if(isupper(ch)) ufreq[ch-'A']++;
+            if(islower(ch)) lfreq[ch-'a']++;
         }
-
-        for (char i : low) {
-            if (up.count(static_cast<char>(toupper(i)))) {
-                c++;
-            }
+        for(int i=0;i<26;i++)
+        {
+            if(ufreq[i]>0 && lfreq[i]>0) count++;
         }
-
-        return c;
+        return count;
     }
 };
