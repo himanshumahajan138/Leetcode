@@ -1,16 +1,11 @@
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
-        int zero=0,one=0,two=0;
-        int n = nums.size();
-        for(int i=0;i<n;++i){
-            if(nums[i]==0)++zero;
-            else if(nums[i]==1)++one;
-            else ++two;
+        int s=0,e=nums.size()-1,move=0;
+        while(move<=e){
+            if(nums[move]==0)swap(nums[move++],nums[s++]);
+            else if(nums[move]==1)move++;
+            else if(nums[move]==2)swap(nums[move],nums[e--]);
         }
-        nums.assign(zero,0);
-        nums.insert(nums.end(),one,1);
-        nums.insert(nums.end(),two,2);
-
     }
 };
