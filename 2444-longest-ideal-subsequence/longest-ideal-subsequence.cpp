@@ -1,16 +1,11 @@
+const static auto initialize = [] {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
 class Solution {
 public:
-
-    bool isValid(const string& sub, int k) {
-        if (sub.length() <= 1) return true;
-        for (int i = 1; i < sub.length(); ++i) {
-            if (abs(sub[i] - sub[i - 1]) > k) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     int calculate(string&s,int&k){
         vector<int> next(27, 0) ;
         vector<int> curr(27, 0);
