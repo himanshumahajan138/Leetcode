@@ -6,33 +6,19 @@ const static auto initialize = [] {
 }();
 class Solution {
 public:
-    int calculate(string&s,int&k){
-        vector<int> next(27, 0) ;
-        vector<int> curr(27, 0);
-       
-        for(int index = s.length()-1 ; index>=0 ; index--)
+    int longestIdealString(string s, int k)
+    {
+        int dp[26] = {};
+
+        for(char c : s)
         {
-            for(int prev = 0 ; prev<= 26 ; prev++)
-            {
-                int op1 = 0 + next[prev];
-                int op2 = 0 ;
+            int mx = 0,
+                ch = c - 'a';
 
-               if(prev == 26)
-               op2 = 1 + next[s[index]-'a'];
-               else if(abs(s[index]-'a' - prev) <= k)
-               op2 = 1 + next[s[index]-'a'];
-
-               curr[prev] = max(op1 , op2);
-            }
-            next = curr;
+            for(int i = max(0, ch - k); i <= min(25, ch + k); ++i) mx = max(mx, dp[i]);
+            dp[ch] = 1 + mx;
         }
 
-       return max(curr[s[0]-'a'] , curr[26]);
-    }
-
-    int longestIdealString(string s, int k) {
-        return calculate(s,k);
-
-
+        return *max_element(begin(dp), end(dp));
     }
 };
