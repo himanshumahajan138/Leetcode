@@ -6,23 +6,17 @@ const static auto initialize = [] {
 }();
 class Solution {
 public:
-    void generate(int i, vector<int>& sub, vector<int>& nums,
-                  vector<vector<int>>& ans, int n) {
-        if (i == n) {
-            ans.push_back(sub);
-            return;
-        }
-        generate(i + 1, sub, nums, ans, n);
-
-        sub.push_back(nums[i]);
-        generate(i + 1, sub, nums, ans, n);
-        sub.pop_back();
-    }
-
     vector<vector<int>> subsets(vector<int>& nums) {
-        vector<int> sub;
-        vector<vector<int>> ans;
-        generate(0, sub, nums, ans, nums.size());
-        return ans;
+        vector<vector<int>>ans;
+        vector<int>temp;
+        int n=nums.size();
+        for(int num=0;num<(1<<n);++num){
+            temp={};
+            for(int i=0;i<n;++i){
+                if((num & (1<<i))!=0)temp.push_back(nums[i]);
+            }
+            ans.push_back(temp);
+        }
+        return ans ;
     }
 };
