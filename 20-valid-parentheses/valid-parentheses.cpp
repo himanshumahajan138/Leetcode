@@ -1,33 +1,28 @@
+const static auto initialize = [] {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout.tie(nullptr);
+    return nullptr;
+}();
 class Solution {
 public:
     bool isValid(string s) {
 
-        stack<char>check_stack;
+        stack<char> st;
 
-        for(auto &ch: s)
-        {
-            if(ch =='(')
-            {
-                check_stack.push(')');
-            }
-            else if(ch == '{')
-            {
-                check_stack.push('}');
-            }
-            else if(ch == '[')
-            {
-                check_stack.push(']');
-            }
-
-            else if(check_stack.empty() || ch!=check_stack.top())
-            {
-                return false;
-            }
-            else
-            {
-                check_stack.pop();
+        for (auto& ch : s) {
+            if (ch == '(' || ch == '{' || ch == '[')
+                st.push(ch);
+            else {
+                if (st.empty())
+                    return false;
+                if ((st.top() == '(' && ch == ')') ||
+                    (st.top() == '{' && ch == '}') ||
+                    (st.top() == '[' && ch == ']'))
+                    st.pop();
+                else return false;
             }
         }
-        return check_stack.empty();
+        return st.empty();
     }
 };
