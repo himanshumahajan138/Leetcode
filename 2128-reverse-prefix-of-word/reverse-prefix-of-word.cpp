@@ -7,14 +7,17 @@ const static auto initialize = [] {
 class Solution {
 public:
     string reversePrefix(string word, char ch) {
-        int ind;
+        int ind = -1;
         for(int i=0 ; i<word.length() ; ++i){
             if(word[i]==ch){
-                string sub = word.substr(0,i+1);
-                string next = word.substr(i+1,word.length()-i-1);
-                reverse(sub.begin(),sub.end());
-                return sub+next;
+                ind =i;
+                break;
             }
+        }
+        if(ind==-1)return word;
+        int i=0;
+        while(i<=ind){
+            swap(word[i++],word[ind--]);
         }
         return word;
     }
