@@ -12,6 +12,7 @@ public:
             ones = (ones ^ x) & (~twos); // add to ones if not present in twos
             twos = (twos ^ x) & (~ones); // add to twos if present in ones, then
                                          // next time it gets deleted from ones
+                                         // because it will be present in twos
         }
         return ones;
     }
