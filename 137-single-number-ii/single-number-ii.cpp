@@ -11,8 +11,10 @@ public:
         for (auto x : nums) {
             ones = (ones ^ x) & (~twos); // add to ones if not present in twos
             twos = (twos ^ x) & (~ones); // add to twos if present in ones, then
-                                         // next time it gets deleted from ones
-                                         // because it will be present in twos
+            // next time it gets deleted from ones
+            // because it will be present in twos we can also
+            // use third bucket but its usefull if single number
+            // occured twice and other thrice
         }
         return ones;
     }
