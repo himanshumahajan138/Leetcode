@@ -17,9 +17,11 @@ const static auto initialize = [] {
 class Solution {
 public:
     int calculate(ListNode* head, int carry) {
+
         if (head->next != NULL) {
             carry = calculate(head->next, carry);
         }
+
         int mul = head->val * 2 + carry;
         if (mul > 9) {
             carry = mul / 10;
@@ -28,7 +30,6 @@ public:
             carry = 0;
 
         head->val = mul;
-
         return carry;
     }
 
