@@ -28,6 +28,7 @@ public:
             else
                 ranks[mpp[score[i]]] = to_string(i + 1);
         }
+        
         return ranks;
     }
 };
