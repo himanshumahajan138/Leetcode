@@ -1,3 +1,10 @@
+const static auto initialize = [] {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return nullptr;
+}();
+
 class Solution {
 public:
     void reverseString(vector<char>& s) {
