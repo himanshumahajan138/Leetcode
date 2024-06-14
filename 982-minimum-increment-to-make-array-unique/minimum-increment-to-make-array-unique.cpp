@@ -1,19 +1,26 @@
+const static auto initialize = [] {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return nullptr;
+}();
 class Solution {
 public:
     int minIncrementForUnique(vector<int>& nums) {
-        int n = nums.size();
+        int count =0;
         sort(nums.begin(),nums.end());
-        map<int,int>mpp;
-        for(auto x : nums)++mpp[x];
-        int cnt=0;
-        for(int i=0; i<mpp.size() ; ++i){
-            if(mpp[i]>1){
-                int val = mpp[i]-1;
-                mpp[i]=1;
-                mpp[i+1]+=val;
-                cnt+=val;
+        for(int i=1;i<nums.size();i++){
+            if(nums[i]==nums[i-1]){
+                int diff=1;
+                count+=diff;
+                nums[i]=nums[i]+diff;
+            }
+            if(nums[i]<nums[i-1]){
+                int diff=nums[i-1]-nums[i]+1;
+                count+=diff;
+                nums[i]=nums[i]+diff;
             }
         }
-        return cnt;
+        return count;
     }
 };
