@@ -1,3 +1,9 @@
+const static auto initialize = [] {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    return nullptr;
+}();
 class Solution {
 public:
     void dfs(int start,vector<int>&visited,vector<int>adj[]){
