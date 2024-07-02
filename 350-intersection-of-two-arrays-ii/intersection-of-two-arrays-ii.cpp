@@ -1,16 +1,13 @@
 class Solution {
 public:
-    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
-        vector<int>ans;
-        for(int i=0;i<nums1.size();i++){
-            for(int j=0;j<nums2.size();j++){
-                if (nums1[i]==nums2[j]){
-                    nums2[j]=INT_MIN;
-                    ans.push_back(nums1[i]);
-                    break;
-                }
-            }
-        }
-        return ans;
+    vector<int> intersect(vector<int>& a, vector<int>& b) {
+        unordered_map<int, int> ctr;
+        for (int i : a)
+            ctr[i]++;
+        vector<int> out;
+        for (int i : b)
+            if (ctr[i]-- > 0)
+                out.push_back(i);
+        return out;
     }
 };
