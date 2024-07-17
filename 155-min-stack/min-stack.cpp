@@ -9,6 +9,8 @@ public:
     int mini = INT_MAX;
     stack<int>st;
 
+    MinStack() {}
+    
     void push(int val) {
         if(val<=mini){
             st.push(mini);
