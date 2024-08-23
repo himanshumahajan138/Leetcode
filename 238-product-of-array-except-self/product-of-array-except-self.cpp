@@ -1,23 +1,16 @@
-const static auto initialize = [] {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-    std::cout.tie(nullptr);
-    return nullptr;
-}();
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
-        int prefixSum = 1, n = nums.size();
-        vector<int> result(n, 1);
-        for (int i = 0; i < n - 1; i++) {
-            result[i + 1] = prefixSum * nums[i];
-            prefixSum *= nums[i];
+        int n=nums.size();
+        vector<int> ans(n,1);
+        for(int i=1 ; i<n ; ++i){
+            ans[i]=ans[i-1]*nums[i-1];
         }
-        prefixSum = 1;
-        for (int i = n - 1; i > 0; i--) {
-            result[i - 1] *= prefixSum * nums[i];
-            prefixSum *= nums[i];
+        int prod=1;
+        for(int i=n-1; i>=0; --i){
+            ans[i]*=prod;
+            prod*=nums[i];
         }
-        return result;
+        return ans;
     }
 };
