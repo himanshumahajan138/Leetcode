@@ -23,7 +23,7 @@ public:
                             x-=dx;  // previous move
                             y-=dy;
                             break;
-                        }
+                        }   
                     //    cout<<"("<<x<<","<<y<<"),";
                         maxD2=max(maxD2, x*x+y*y);
                     }
