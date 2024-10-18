@@ -22,7 +22,7 @@ public:
         for (int num : nums)
         {
             maxOR |= num;
-        }
+        }   
 
         int count = 0;
         // Step 2: Backtrack to count the subsets
