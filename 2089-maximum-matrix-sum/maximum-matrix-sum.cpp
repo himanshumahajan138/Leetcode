@@ -19,5 +19,4 @@ public:
             return sum;
         return sum - 2 * minValue;
     }
-    
 };
