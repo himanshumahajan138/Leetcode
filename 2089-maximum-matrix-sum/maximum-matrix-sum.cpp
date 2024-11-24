@@ -17,6 +17,7 @@ public:
 
         if (negCount % 2 == 0)
             return sum;
+            
         return sum - 2 * minValue;
     }
 };
