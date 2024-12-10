@@ -22,7 +22,7 @@ private:
 
         for (int i = 0; i < n; i++) {
             while (s[p] != s[i]) p++;
-            if (i - p + 1 >= x) cnt[s[i] - 'a']++;
+               if (i - p + 1 >= x) cnt[s[i] - 'a']++;
             if (cnt[s[i] - 'a'] > 2) return true;
         }
 
