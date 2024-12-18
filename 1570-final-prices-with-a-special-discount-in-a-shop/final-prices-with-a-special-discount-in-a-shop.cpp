@@ -1,29 +1,16 @@
-const static auto initialize = [] {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-    std::cout.tie(nullptr);
-    return nullptr;
-}();
-
 class Solution {
 public:
     vector<int> finalPrices(vector<int>& prices) {
-        stack<int> mono;
-        int n = prices.size();
-        vector<int> ans(n);
-
-        for (int i = n - 1; i >= 0; --i) {
-            while (!mono.empty() && mono.top() > prices[i]) {
-                mono.pop();
-            }
-            if (!mono.empty()) {
-                ans[i] = prices[i] - mono.top();
-            } else {
-                ans[i] = prices[i];
-            }
-            mono.push(prices[i]);
+        const int n=prices.size();
+        int stack[500], top=0;
+        stack[top]=n-1;
+        vector<int> ans=prices;
+        for(int i=n-2; i>=0; i--){
+            while(top>=0 && prices[i]<prices[stack[top]])
+                top--;
+            if (top>=0) ans[i]-=prices[stack[top]];
+            stack[++top]=i;
         }
-
         return ans;
     }
 };
