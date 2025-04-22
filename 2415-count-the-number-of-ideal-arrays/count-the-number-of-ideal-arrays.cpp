@@ -30,5 +30,5 @@ ll power(ll a, ll b, ll m = mod) {ll res = 1;while (b > 0) {if (b & 1)res = (res
             for (int j = 1; j <= min(n, 14); j++)
                 res = (res + mod_inv(n - 1, n - j) * dp[i][j]) % mod;
         return res;
-    } 
+    }
 };
