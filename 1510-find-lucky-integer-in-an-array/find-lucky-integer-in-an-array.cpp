@@ -18,7 +18,7 @@ public:
             if (freq == val) {
                 ans = val; // Keep updating to get the largest lucky integer
             }
-        }
+        }   
 
         return ans;
     }
