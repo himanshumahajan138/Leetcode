@@ -1,35 +1,20 @@
-const static auto initialize = [] {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-    std::cout.tie(nullptr);
-    return nullptr;
-}();
 class Solution {
 public:
-    int compareVersion(string version1, string version2) {
-        int i1 = 0, i2 = 0;
-        int n1 = version1.length(), n2 = version2.length();
-
-        while (i1 < n1 || i2 < n2) {
-            int num1 = 0, num2 = 0;
-
-            while (i1 < n1 && version1[i1] != '.') {
-                num1 = num1 * 10 + (version1[i1] - '0');
-                ++i1;
+    static int compareVersion(string& v1, string& v2) {
+        const int n1=v1.size(), n2=v2.size();
+        int x1=0, x2=0;
+        for(int i=0, j=0; i<n1 || j<n2; i++, j++){
+            while(i<n1 && v1[i]!='.'){
+                x1=10*x1+(v1[i++]-'0');
             }
-
-            while (i2 < n2 && version2[i2] != '.') {
-                num2 = num2 * 10 + (version2[i2] - '0');
-                ++i2;
+            while(j<n2 && v2[j]!='.'){
+                x2=10*x2+(v2[j++]-'0');
             }
-
-            if (num1 < num2) return -1;
-            else if (num1 > num2) return 1;
-
-            ++i1;
-            ++i2;
+            if (x1<x2) return -1;
+            else if (x1>x2) return 1;
+            x1=0;
+            x2=0;
         }
-
         return 0;
     }
 };
