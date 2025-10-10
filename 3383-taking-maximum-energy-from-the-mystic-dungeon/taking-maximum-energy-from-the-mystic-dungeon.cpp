@@ -1,31 +1,19 @@
-const static auto initialize = [] {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-    std::cout.tie(nullptr);
-    return nullptr;
-}();
-
 class Solution {
 public:
-    int maximumEnergy(vector<int>& energy, int k) {
-       
-        int n=energy.size();
-        
-        int maxi=INT_MIN;
-        
-        int i=n-1;
-        
-        while(i>=n-k){
-            int e=0;
-            int j=i;
-        
-            while(j>=0){
-                e+=energy[j];
-                maxi=max(maxi,e);
-                j-=k;
-            }
-            --i;
+    static int maximumEnergy(vector<int>& energy, int k) {
+        const int n=energy.size();
+        int ans=*max_element(energy.rbegin(), energy.rbegin()+k);
+        for(int i=n-k-1; i>=0; i--){
+            int curr=energy[i]+=energy[i+k];
+            ans=max(ans, curr);
         }
-        return maxi;
+        return ans;
     }
 };
+
+auto init = []() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();
