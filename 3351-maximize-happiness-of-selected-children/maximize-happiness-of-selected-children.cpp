@@ -1,32 +1,17 @@
-const static auto initialize = [] {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-    std::cout.tie(nullptr);
-    return nullptr;
-}();
 class Solution {
 public:
-    long long maximumHappinessSum(vector<int>& happiness, int k) {
-        int n = happiness.size();
-        if(n==1)return happiness[0];
+    long long maximumHappinessSum(vector<int>& christmasJoy, int gifts) {
+        // Santa gives gifts to the happiest children first
+        sort(christmasJoy.begin(), christmasJoy.end(), greater<int>());
         
-        //edge case if k==n simply add 0 in begin() for overflow index error , very clever
-        if (k==n){
-            happiness.insert(happiness.begin(),0);
-            ++n;
+        long long totalJoy = 0;
+        for (int turn = 0; turn < gifts; ++turn) {
+            int currentJoy = christmasJoy[turn] - turn;
+            if (currentJoy <= 0)
+                break;
+            totalJoy += currentJoy;
         }
         
-        
-        sort(happiness.begin(),happiness.end());
-        
-        int i=0,temp=k;
-        long long sum=0;
-
-        while(k-- && i!=temp){
-            sum+=happiness[n-1-i];
-            happiness[n-i-2] = happiness[n-i-2]-(i+1) >= 0 ? happiness[n-i-2]-(i+1) : 0 ;
-            ++i;
-        }
-        return sum;
+        return totalJoy;
     }
 };
