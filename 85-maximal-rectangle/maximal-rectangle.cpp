@@ -1,37 +1,54 @@
-#pragma GCC optimize("O3", "unroll-loops")
 class Solution {
 public:
     int maximalRectangle(vector<vector<char>>& matrix) {
-        const unsigned short row=matrix.size(), col=matrix[0].size();
-        if (row==1 && col==1) return matrix[0][0]=='1';
-        vector<unsigned short> h(col+1);//height 
-        int maxArea=0;
+        if (matrix.empty() || matrix[0].empty()) return 0;
 
-        for(int i=0; i<row; i++){
-            vector<int> st={-1}; //stack will not be empty
-            for (int j=0; j<=col; j++){
-                // Count the successive '1's & store in h[j]
-                h[j]=(j==col||matrix[i][j]=='0')?0:h[j]+1;
+        int M = matrix.size();
+        int N = matrix[0].size();
 
-                // monotonic stack has at least element -1
-                while(st.size()>1 && (j==col||h[j]<h[st.back()])){
-                    const int m=st.back();
-                    st.pop_back();
-                    const int w=j-st.back()-1;
-                    const int area=h[m]*w;
-                    maxArea=max(maxArea, area);
-                }
-                st.push_back(j);
+        // convert char to int (in-place)
+        vector<vector<int>> mat(M, vector<int>(N));
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                mat[i][j] = matrix[i][j] - '0';
             }
         }
-        return maxArea;
+
+        // row-wise prefix widths
+        for (int i = 0; i < M; i++) {
+            for (int j = 1; j < N; j++) {
+                if (mat[i][j] == 1) {
+                    mat[i][j] += mat[i][j - 1];
+                }
+            }
+        }
+
+        int Ans = 0;
+
+        // fix each column
+        for (int j = 0; j < N; j++) {
+            for (int i = 0; i < M; i++) {
+                int width = mat[i][j];
+                if (width == 0) continue;
+
+                // expand downward
+                int currWidth = width;
+                for (int k = i; k < M && mat[k][j] > 0; k++) {
+                    currWidth = min(currWidth, mat[k][j]);
+                    int height = k - i + 1;
+                    Ans = max(Ans, currWidth * height);
+                }
+
+                // expand upward
+                currWidth = width;
+                for (int k = i; k >= 0 && mat[k][j] > 0; k--) {
+                    currWidth = min(currWidth, mat[k][j]);
+                    int height = i - k + 1;
+                    Ans = max(Ans, currWidth * height);
+                }
+            }
+        }
+
+        return Ans;
     }
 };
-
-
-auto init = []() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    return 'c';
-}();
