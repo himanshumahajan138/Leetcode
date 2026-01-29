@@ -1,40 +1,49 @@
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
 class Solution {
 public:
-    long long minimumCost(string source, string target, vector<char>& original, vector<char>& changed, vector<int>& cost) {
-        const int inf = 1 << 29;
-        int g[26][26];
+    long long minimumCost(string source, string target,
+ vector<char>& original, vector<char>& changed, vector<int>& cost) {
+        long long dist[26][26];
+        const long long INF = 1e14;
+
         for (int i = 0; i < 26; ++i) {
-            fill(begin(g[i]), end(g[i]), inf);
-            g[i][i] = 0;
+            for (int j = 0; j < 26; ++j) {
+                dist[i][j] = (i == j) ? 0 : INF;
+            }
         }
 
-        for (int i = 0; i < original.size(); ++i) {
-            int x = original[i] - 'a';
-            int y = changed[i] - 'a';
-            int z = cost[i];
-            g[x][y] = min(g[x][y], z);
+        for (size_t i = 0; i < original.size(); ++i) {
+            int u = original[i] - 'a';
+            int v = changed[i] - 'a';
+            dist[u][v] = min(dist[u][v], (long long)cost[i]);
         }
 
         for (int k = 0; k < 26; ++k) {
             for (int i = 0; i < 26; ++i) {
+                if (dist[i][k] == INF) continue;
                 for (int j = 0; j < 26; ++j) {
-                    g[i][j] = min(g[i][j], g[i][k] + g[k][j]);
+                    if (dist[k][j] != INF) {
+                        dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]);
+                    }
                 }
             }
         }
 
-        long long ans = 0;
+        long long totalCost = 0;
         int n = source.length();
+
         for (int i = 0; i < n; ++i) {
-            int x = source[i] - 'a';
-            int y = target[i] - 'a';
-            if (x != y) {
-                if (g[x][y] >= inf) {
-                    return -1;
-                }
-                ans += g[x][y];
-            }
+            int u = source[i] - 'a';
+            int v = target[i] - 'a';
+            if (u == v) continue;
+            if (dist[u][v] == INF) return -1;
+            totalCost += dist[u][v];
         }
-        return ans;
+
+        return totalCost;
     }
 };
