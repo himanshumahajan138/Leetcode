@@ -1,9 +1,3 @@
-const static auto initialize = [] {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    return nullptr;
-}();
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -12,49 +6,37 @@ const static auto initialize = [] {
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
- * right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
 class Solution {
 public:
-    int makeVine(TreeNode* grand, int cnt = 0) {
-        auto n = grand->right;
-        while (n != nullptr) {
-            if (n->left != nullptr) {
-                auto old_n = n;
-                n = n->left;
-                old_n->left = n->right;
-                n->right = old_n;
-                grand->right = n;
-            } else {
-                ++cnt;
-                grand = n;
-                n = n->right;
-            }
-        }
-        return cnt;
+    vector<TreeNode*> arr;
+    void inOrder(TreeNode* root){
+        if (!root) return;
+        inOrder(root->left);
+        arr.push_back(root);
+        inOrder(root->right);
     }
-    void compress(TreeNode* grand, int m) {
-        auto n = grand->right;
-        while (m-- > 0) {
-            auto old_n = n;
-            n = n->right;
-            grand->right = n;
-            old_n->right = n->left;
-            n->left = old_n;
-            grand = n;
-            n = n->right;
-        }
+
+    TreeNode* balanceBST(const int l, const int r){
+        if (l>r) return NULL;
+        const int m=(l+r)/2;
+        TreeNode* const left=balanceBST(l, m-1);
+        TreeNode* const right=balanceBST(m+1, r);
+        arr[m]->left=left;
+        arr[m]->right=right;
+        return arr[m];
     }
+
     TreeNode* balanceBST(TreeNode* root) {
-        TreeNode grand;
-        grand.right = root;
-        auto cnt = makeVine(&grand);
-        int m = pow(2, int(log2(cnt + 1))) - 1;
-        compress(&grand, cnt - m);
-        for (m = m / 2; m > 0; m /= 2)
-            compress(&grand, m);
-        return grand.right;
+        inOrder(root);
+        return balanceBST(0, arr.size()-1);
     }
 };
+auto init = []() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();
